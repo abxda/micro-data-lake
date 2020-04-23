@@ -1,0 +1,9 @@
+version: "3"
+
+# All available services
+services:
+
+    #Data Science Services
+    jupyter:
+        container_name: "jupyter-container"
+        
