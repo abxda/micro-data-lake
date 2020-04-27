@@ -1,0 +1,30 @@
+ARG BASE_CONTAINER=jupyter/all-spark-notebook
+FROM $BASE_CONTAINER
+
+USER root
+
+RUN pip install --no-cache-dir \
+    html2text \
+    psycopg2-binary \
+    minio
+
+#Configure
+#master
+ADD  config/master.sh /
+RUN chmod +x /master.sh
+
+ENV SPARK_MASTER_PORT 7077
+ENV SPARK_MASTER_WEBUI_PORT 8080
+ENV SPARK_MASTER_LOG /usr/local/spark/logs
+
+EXPOSE 8080 7077 6066
+
+#master
+ADD  config/worker.sh /
+RUN chmod +x /worker.sh
+
+ENV SPARK_WORKER_WEBUI_PORT 8081
+ENV SPARK_WORKER_LOG /spark/logs
+ENV SPARK_MASTER "spark://spark-master:7077"
+
+EXPOSE 8081

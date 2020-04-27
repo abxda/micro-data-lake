@@ -1,0 +1,11 @@
+FROM puckel/docker-airflow
+
+USER root
+
+RUN pip install --no-cache-dir \
+    minio \
+    numpy==1.15.4 \
+    pandas==0.24.2 \
+    scikit-learn==0.20.3 \
+    scipy==1.2.1 \
+    newspaper3k==0.2.8
