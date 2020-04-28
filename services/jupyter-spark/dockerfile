@@ -6,7 +6,8 @@ USER root
 RUN pip install --no-cache-dir \
     html2text \
     psycopg2-binary \
-    minio
+    minio \
+    newspaper3k==0.2.8
 
 #Configure
 #master

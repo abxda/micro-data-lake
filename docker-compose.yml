@@ -1,11 +1,17 @@
 version: "3"
-#Micro Data Lake Services by @abxda
+#Micro Data Lake by @abxda
 services:
   # Notebooks
   jupyter:
     build: ./services/jupyter-spark/
     env_file:
       - ./config/jupyter.env
+      - ./config/postgres.env
+      - ./config/superset_database.env
+      - ./config/airflow_database.env
+      - ./config/shared_database.env
+      - ./config/hive_database.env
+      - ./config/minio.env
     restart: always
     container_name: jupyter
     volumes: 
