@@ -8,3 +8,4 @@ echo "Creating database: superset"
 $POSTGRES <<EOSQL
 CREATE DATABASE superset OWNER superset;
 EOSQL
+ 

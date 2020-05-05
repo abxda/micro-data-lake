@@ -8,3 +8,4 @@ echo "Creating database: airflow"
 $POSTGRES <<EOSQL
 CREATE DATABASE airflow OWNER airflow;
 EOSQL
+ 

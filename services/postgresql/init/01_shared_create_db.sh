@@ -8,3 +8,4 @@ echo "Creating database: shared"
 $POSTGRES <<EOSQL
 CREATE DATABASE shared OWNER shared;
 EOSQL
+ 
