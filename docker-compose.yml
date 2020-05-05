@@ -19,44 +19,6 @@ services:
     ports:
       - "8181:8888"
     entrypoint: sh -c 'start-notebook.sh --NotebookApp.token=$$JUPYTER_PASSWORD'
-  # Spark Master
-  spark-master:
-    build: ./services/jupyter-spark/
-    restart: always
-    env_file: 
-      - ./config/spark.env
-    entrypoint: ["/bin/bash", "/master.sh"]
-    container_name: spark-master
-    ports:
-      - "8080:8080"
-      - "7077:7077"
-  # Spark Worker
-  spark-worker-1:
-      build: ./services/jupyter-spark/
-      restart: always
-      entrypoint: ["/bin/bash", "/worker.sh"]
-      container_name: spark-worker-1
-      depends_on:
-        - spark-master
-      ports:
-        - "8081:8081"
-      environment:
-        - "SPARK_MASTER=spark://spark-master:7077"
-  # Hadoop SQL
-  hive:
-    build: ./services/spark-hive/
-    restart: always
-    entrypoint: /init-hive.sh
-    container_name: hive
-    ports:
-      - "9083:9083"
-      - "10000:10000"
-    links:
-      - "postgres:postgres"
-    depends_on:
-      - "postgres"
-    env_file: 
-      - ./config/postgres.env
   # Relational SQL
   postgres:
     image: postgres
@@ -85,21 +47,6 @@ services:
     ports:
       - 5050:80
     restart: "always"
-  # Spark SQL
-  spark-sql:
-    build: ./services/spark-hive/
-    restart: always
-    entrypoint: /init-spark.sh
-    container_name: spark-sql
-    depends_on:
-      - spark-master
-    ports:
-      - "10001:10001"
-    environment:
-      - "SPARK_MASTER=spark://spark-master:7077"
-    links:
-      - "postgres:postgres"
-      - "hive:hive"
   # Model Storage
   minio:
     container_name: "minio"
@@ -125,9 +72,9 @@ services:
       - 80:80
   # Visualization
   superset:
+    build: ./services/superset/
     container_name: "superset"
     restart: "always"
-    image: tylerfowler/superset:0.24
     depends_on:
         - postgres
     env_file:
@@ -147,7 +94,9 @@ services:
       - ./config/minio.env
       - ./config/shared_database.env
     volumes:
-      - /services/airflow/dags/:/usr/local/airflow/dags
+      - ./services/airflow/dags/:/usr/local/airflow/dags
+
+      - ./notebooks:/usr/local/airflow/data
     ports:
       - 7777:8080
     command: webserver
