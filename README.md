@@ -1,5 +1,5 @@
 
-#Micro Data Lake based on Docker Compose
+# Micro Data Lake based on Docker Compose
 
 
 This is the implementation of a Minimum Data Lake, inspired by the work published in: https://github.com/kkiaune/emails-classification
