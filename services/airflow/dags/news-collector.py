@@ -65,7 +65,7 @@ def get_news(ds, **kwargs):
 
     if not path.exists(filename_fs):
         subprocess.run(['sh', news_data_dir+'/libs/get_news.sh',num_noticias, search_topic, directory_topic,execution_year,execution_month,execution_day,bucket])
-        minio_client.fput_object(bucket, filename_s3, filename_fs, content_type='application/json')
+    minio_client.fput_object(bucket, filename_s3, filename_fs, content_type='application/json')
 
 default_args = {
     'owner': 'micro-data-lake',
