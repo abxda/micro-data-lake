@@ -126,7 +126,9 @@ RUN pip install --no-cache-dir \
     html2text \
     psycopg2-binary \
     minio \
-    newspaper3k==0.2.8
+    newspaper3k==0.2.8 \
+    altair \
+    vega_datasets
 
 #Configure
 #master
