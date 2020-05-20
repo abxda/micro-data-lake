@@ -9,6 +9,10 @@ RUN pip install --no-cache-dir \
 RUN pip install --no-cache-dir \
   scipy==1.2.1 \
   dill==0.2.8.2 \
-  psycopg2-binary===2.7.4 
+  psycopg2-binary===2.7.4  \
+  altair \
+  vega_datasets \
+  SQLAlchemy \
+  aiofiles
 
 #COPY ./app /app

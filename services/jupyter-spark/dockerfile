@@ -68,7 +68,10 @@ RUN cd $SPARK_HOME/jars && \
     wget -q https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/${AWS_SDK_VERSION}/aws-java-sdk-${AWS_SDK_VERSION}.jar && \
     wget -q https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-kms/${AWS_SDK_VERSION}/aws-java-sdk-kms-${AWS_SDK_VERSION}.jar && \
     wget -q https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-s3/${AWS_SDK_VERSION}/aws-java-sdk-s3-${AWS_SDK_VERSION}.jar && \
-    wget -q https://jdbc.postgresql.org/download/postgresql-42.2.12.jar
+    wget -q https://jdbc.postgresql.org/download/postgresql-42.2.12.jar && \
+    wget -q https://github.com/DataSystemsLab/GeoSpark/releases/download/1.3.1-spark-2.3/geospark-1.3.1.jar && \
+    wget -q https://github.com/DataSystemsLab/GeoSpark/releases/download/1.3.1-spark-2.3/geospark-sql_2.3-1.3.1.jar && \
+    wget -q https://github.com/DataSystemsLab/GeoSpark/releases/download/1.3.1-spark-2.3/geospark-viz_2.3-1.3.1.jar
 
 # RSpark config
 ENV R_LIBS_USER $SPARK_HOME/R/lib
@@ -103,7 +106,7 @@ RUN pip install --no-cache-dir \
     jupyter toree install --sys-prefix && \
     rm -rf /home/$NB_USER/.local && \
     fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions /home/$NB_USER 
 
 # Spylon-kernel
 RUN conda install --quiet --yes 'spylon-kernel=0.4*' && \
@@ -128,7 +131,9 @@ RUN pip install --no-cache-dir \
     minio \
     newspaper3k==0.2.8 \
     altair \
-    vega_datasets
+    vega_datasets \
+    geospark \
+    geopandas
 
 #Configure
 #master

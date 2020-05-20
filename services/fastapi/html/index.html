@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Embedding Vega-Lite</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.11.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.12.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.8.0"></script>
+  </head>
+  <body>
+    <input type="text" id="keyword" name="kwtext"> <button onclick="reloadChartWithKeyword()">Query</button> <br>
+    <div id="vis"></div>
+
+    <script type="text/javascript">      
+        var request = new XMLHttpRequest()
+        request.open('GET', 'http://localhost/altair-chart/', true)
+        request.onload = function() {
+        var data = JSON.parse(this.response)
+        if (request.status >= 200 && request.status < 400) {            
+            vegaEmbed('#vis', data);
+        } else {
+            const errorMessage = document.createElement('marquee')
+            errorMessage.textContent = `Error`
+            app.appendChild(errorMessage)
+        }
+        }
+        request.send()
+
+        function reloadChartWithKeyword(){
+          var kw = document.getElementById("keyword").value;
+          request.open('GET', 'http://localhost/keyword/'+kw, true)
+          request.onload = function() {
+          var data = JSON.parse(this.response)
+          if (request.status >= 200 && request.status < 400) {            
+              vegaEmbed('#vis', data);
+          } else {
+              const errorMessage = document.createElement('marquee')
+              errorMessage.textContent = `Error`
+              app.appendChild(errorMessage)
+          }
+          }
+          request.send()
+          
+        }
+    </script>
+  </body>
+</html>
